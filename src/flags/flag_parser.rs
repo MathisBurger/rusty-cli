@@ -39,8 +39,11 @@ impl FlagParser {
                     return None;
                 }
                 flags.insert(safe_flag.clone().id, flag_arguments);
+                i += 2;
+            } else {
+                flags.insert(safe_flag.id, None);
+                i += 1;
             }
-            flags.insert(safe_flag.id, None);
 
         }
 
