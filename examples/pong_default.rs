@@ -25,6 +25,7 @@ fn main() {
     let mut runner = Runner::new();
     runner.enable_command_handler(CommandHandlerArguments {
         commands: vec![pong_command],
+        default_no_argument_callback: None
     });
      runner.run();
 }

@@ -25,7 +25,8 @@ impl Runner {
     pub fn enable_command_handler(&mut self, config: CommandHandlerArguments) {
         let mut handler = CommandHandler::new();
         handler.set_commands(CommandHandlerArguments {
-            commands: config.commands.to_vec()
+            commands: config.commands.to_vec(),
+            default_no_argument_callback: config.default_no_argument_callback
         });
         self.command_handler = Some(handler);
     }
