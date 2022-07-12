@@ -1,5 +1,6 @@
 use std::env::Args;
 use crate::command_handler::{CommandHandler, CommandHandlerArguments};
+use crate::commands::command::Command;
 
 type CustomExecutor = fn(arguments: Args);
 
@@ -22,8 +23,10 @@ impl Runner {
     /// Enables the internal command handler
     /// And sets the provided arguments of the command handler
     pub fn enable_command_handler(&mut self, config: CommandHandlerArguments) {
-        let mut handler = CommandHandler::new(std::env::args());
-        handler.set_commands(config);
+        let mut handler = CommandHandler::new();
+        handler.set_commands(CommandHandlerArguments {
+            commands: config.commands.to_vec()
+        });
         self.command_handler = Some(handler);
     }
 
@@ -38,8 +41,8 @@ impl Runner {
     /// Otherwise a custom handler has been provided that is executed
     pub fn run(&mut self) {
         if self.command_handler.is_some() {
-            println!("Command-handler is not implemented yet");
-            return;
+            let mut handler = self.command_handler.as_ref().unwrap().clone();
+            handler.execute_command();
         } else if self.custom_executor.is_some() {
             self.custom_executor.unwrap()(std::env::args());
         } else {

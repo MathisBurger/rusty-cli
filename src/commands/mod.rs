@@ -1,1 +1,1 @@
-pub mod command_trait;
+pub mod command;
