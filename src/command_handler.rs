@@ -3,6 +3,7 @@ use std::env::Args;
 use std::ops::Deref;
 use std::rc::Rc;
 use crate::commands::command::Command;
+use crate::commands::help_command::HelpCommand;
 
 pub struct CommandHandlerArguments {
     pub commands: Vec<Command>
@@ -41,14 +42,13 @@ impl CommandHandler {
 
         let command_argument = arguments.nth(1);
         if command_argument.is_none() {
-            // TODO: Implement help command
-            println!("Help command missing");
+            // TODO: Implement option for help on no argument
+            HelpCommand::new(self.commands.clone()).execute();
             return;
         }
         let arg = command_argument.as_ref().unwrap().to_string();
         if !self.command_args.contains(&arg.clone()) {
-            // TODO: Implement help command
-            println!("Help Command is not implemented yet");
+            HelpCommand::new(self.commands.clone()).execute();
             return;
         }
         for command in &self.commands {
