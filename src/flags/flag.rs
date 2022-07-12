@@ -1,11 +1,12 @@
 
+#[derive(Clone)]
 pub struct Flag {
     /// The identifier of a flag
-    id: String,
+    pub(crate) id: String,
     /// The shorthands of a flag
-    shorthands: Vec<String>,
+    pub(crate) shorthands: Vec<String>,
     /// If the flag has arguments
-    has_arguments: bool
+    pub(crate) has_arguments: bool
 }
 
 impl Flag {
