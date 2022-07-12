@@ -1,12 +1,14 @@
 use std::env::Args;
 use crate::command_handler::{CommandHandler, CommandHandlerArguments};
 use crate::commands::command::Command;
+use crate::meta_data::ApplicationMetaData;
 
 type CustomExecutor = fn(arguments: Args);
 
 pub struct Runner {
     command_handler: Option<CommandHandler>,
-    custom_executor: Option<CustomExecutor>
+    custom_executor: Option<CustomExecutor>,
+    meta_data: Option<ApplicationMetaData>
 }
 
 impl Runner {
@@ -16,7 +18,8 @@ impl Runner {
     pub fn new() -> Self {
         Runner {
             command_handler: None,
-            custom_executor: None
+            custom_executor: None,
+            meta_data: None
         }
     }
 
@@ -35,6 +38,11 @@ impl Runner {
     /// system.
     pub fn enable_custom_executor(&mut self, executor: CustomExecutor) {
         self.custom_executor = Some(executor);
+    }
+
+    /// Sets the meta data of the application
+    pub fn set_meta_data(&mut self, data: ApplicationMetaData) {
+        self.meta_data = Some(data);
     }
 
     /// Executes the main runner. If there is a command handler
