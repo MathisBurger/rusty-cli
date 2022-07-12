@@ -6,7 +6,6 @@ pub mod meta_data;
 mod option_resolver;
 pub mod flags;
 
-// TODO: Implement argument parser
 // TODO: Implement wrapped inputs
 // TODO: Implement file reader
 // TODO: Config reader
