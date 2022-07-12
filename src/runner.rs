@@ -1,7 +1,7 @@
 use std::env::Args;
 use crate::command_handler::{CommandHandler, CommandHandlerArguments};
-use crate::commands::command::Command;
 use crate::meta_data::ApplicationMetaData;
+use crate::option_resolver::clone_meta_data_option;
 
 type CustomExecutor = fn(arguments: Args);
 
@@ -25,12 +25,16 @@ impl Runner {
 
     /// Enables the internal command handler
     /// And sets the provided arguments of the command handler
+    ///
+    /// NOTE: This method that should be executed as final step, because it
+    /// depends on steps before.
     pub fn enable_command_handler(&mut self, config: CommandHandlerArguments) {
         let mut handler = CommandHandler::new();
-        handler.set_commands(CommandHandlerArguments {
+        handler.set_args(CommandHandlerArguments {
             commands: config.commands.to_vec(),
-            default_no_argument_callback: config.default_no_argument_callback
+            default_no_argument_callback: config.default_no_argument_callback,
         });
+        handler.set_meta_data(clone_meta_data_option(&self.meta_data));
         self.command_handler = Some(handler);
     }
 

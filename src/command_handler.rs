@@ -1,24 +1,23 @@
-use std::collections::HashMap;
-use std::env::Args;
-use std::ops::Deref;
-use std::rc::Rc;
 use crate::commands::command::{Callback, Command};
 use crate::commands::help_command::HelpCommand;
+use crate::meta_data::ApplicationMetaData;
 use crate::noop::noop;
+use crate::option_resolver::clone_meta_data_option;
 
 pub struct CommandHandlerArguments {
     /// All commands that can be executed by the cli
     pub commands: Vec<Command>,
     /// The callback that is executed of no argument is provided
     /// If this is None, the help command will be executed
-    pub default_no_argument_callback: Option<Callback>
+    pub default_no_argument_callback: Option<Callback>,
 }
 
 #[derive(Clone)]
 pub(crate) struct CommandHandler {
     commands: Vec<Command>,
     command_args: Vec<String>,
-    no_argument_callback: Option<Callback>
+    no_argument_callback: Option<Callback>,
+    meta_data: Option<ApplicationMetaData>
 }
 
 impl CommandHandler {
@@ -28,13 +27,19 @@ impl CommandHandler {
         CommandHandler {
             commands: vec![],
             command_args: vec![],
-            no_argument_callback: Some(noop)
+            no_argument_callback: Some(noop),
+            meta_data: None
         }
+    }
+
+    /// Sets the meta data of the application into the command handler
+    pub fn set_meta_data(&mut self, meta_data: Option<ApplicationMetaData>) {
+        self.meta_data = meta_data;
     }
 
     /// Sets the commands and the mappings
     /// to the executor classes
-    pub fn set_commands(&mut self, config: CommandHandlerArguments) {
+    pub fn set_args(&mut self, config: CommandHandlerArguments) {
         self.commands = config.commands.clone();
         self.command_args = config.commands.into_iter().map(|x|x.caller_arg.clone()).collect::<Vec<String>>();
         self.no_argument_callback = config.default_no_argument_callback;
@@ -47,14 +52,14 @@ impl CommandHandler {
         let mut arguments= std::env::args();
         let is_argument_provided = arguments.len() > 0;
         if !is_argument_provided {
-            HelpCommand::new(self.commands.clone()).execute();
+            HelpCommand::new(self.commands.clone(), clone_meta_data_option(&self.meta_data)).execute();
             return;
         }
 
         let command_argument = arguments.nth(1);
         if command_argument.is_none() {
             if self.no_argument_callback.is_none() {
-                HelpCommand::new(self.commands.clone()).execute();
+                HelpCommand::new(self.commands.clone(), clone_meta_data_option(&self.meta_data)).execute();
             } else {
                 (self.no_argument_callback.unwrap())();
             }
@@ -62,7 +67,7 @@ impl CommandHandler {
         }
         let arg = command_argument.as_ref().unwrap().to_string();
         if !self.command_args.contains(&arg.clone()) {
-            HelpCommand::new(self.commands.clone()).execute();
+            HelpCommand::new(self.commands.clone(), clone_meta_data_option(&self.meta_data)).execute();
             return;
         }
         for command in &self.commands {

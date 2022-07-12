@@ -1,8 +1,10 @@
+
+#[derive(Clone)]
 pub struct ApplicationMetaData {
     /// The title of the application
-    title: String,
+    pub title: String,
     /// The description of the application
-    description: String
+    pub description: String
 }
 
 impl ApplicationMetaData {
