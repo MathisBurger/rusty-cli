@@ -33,6 +33,7 @@ impl Runner {
         handler.set_args(CommandHandlerArguments {
             commands: config.commands.to_vec(),
             default_no_argument_callback: config.default_no_argument_callback,
+            flags: config.flags
         });
         handler.set_meta_data(clone_meta_data_option(&self.meta_data));
         self.command_handler = Some(handler);

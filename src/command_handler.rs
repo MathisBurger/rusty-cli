@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use crate::commands::command::{Callback, Command};
 use crate::commands::help_command::HelpCommand;
 use crate::flags::flag::{Flag, Flags};
@@ -68,12 +69,7 @@ impl CommandHandler {
             if self.no_argument_callback.is_none() {
                 HelpCommand::new(self.commands.clone(), clone_meta_data_option(&self.meta_data)).execute();
             } else {
-                let parsed_flags = FlagParser::new(self.flags.clone()).parse_flags();
-                if parsed_flags.is_some() {
-                    (self.no_argument_callback.unwrap())(parsed_flags.unwrap());
-                } else {
-                    // TODO: Log flag error
-                }
+                (self.no_argument_callback.unwrap())(HashMap::new());
             }
             return;
         }
@@ -84,7 +80,12 @@ impl CommandHandler {
         }
         for command in &self.commands {
             if command.caller_arg == arg {
-                (command.executor)();
+                let parsed_flags = FlagParser::new(self.flags.clone()).parse_flags();
+                if parsed_flags.is_some() {
+                    (command.executor)(parsed_flags.unwrap());
+                } else {
+                    // TODO: Log flag error
+                }
                 break;
             }
         }
