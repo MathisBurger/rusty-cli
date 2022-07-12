@@ -4,6 +4,7 @@ pub mod commands;
 pub(crate) mod noop;
 pub mod meta_data;
 mod option_resolver;
+pub mod flags;
 
 // TODO: Implement flags
 // TODO: Implement argument parser
