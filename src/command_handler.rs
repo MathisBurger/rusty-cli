@@ -9,7 +9,7 @@ pub struct CommandHandlerArguments {
 }
 
 #[derive(Clone)]
-pub struct CommandHandler {
+pub(crate) struct CommandHandler {
     commands: Vec<Command>,
     command_args: Vec<String>
 }
