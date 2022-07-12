@@ -1,5 +1,7 @@
 use crate::commands::command::{Callback, Command};
 use crate::commands::help_command::HelpCommand;
+use crate::flags::flag::{Flag, Flags};
+use crate::flags::flag_parser::FlagParser;
 use crate::meta_data::ApplicationMetaData;
 use crate::noop::noop;
 use crate::option_resolver::clone_meta_data_option;
@@ -10,6 +12,8 @@ pub struct CommandHandlerArguments {
     /// The callback that is executed of no argument is provided
     /// If this is None, the help command will be executed
     pub default_no_argument_callback: Option<Callback>,
+    /// All flags that are provided by the cli
+    pub flags: Vec<Flag>
 }
 
 #[derive(Clone)]
@@ -17,7 +21,8 @@ pub(crate) struct CommandHandler {
     commands: Vec<Command>,
     command_args: Vec<String>,
     no_argument_callback: Option<Callback>,
-    meta_data: Option<ApplicationMetaData>
+    meta_data: Option<ApplicationMetaData>,
+    flags: Vec<Flag>
 }
 
 impl CommandHandler {
@@ -27,8 +32,9 @@ impl CommandHandler {
         CommandHandler {
             commands: vec![],
             command_args: vec![],
-            no_argument_callback: Some(noop),
-            meta_data: None
+            no_argument_callback: None,
+            meta_data: None,
+            flags: vec![]
         }
     }
 
@@ -43,6 +49,7 @@ impl CommandHandler {
         self.commands = config.commands.clone();
         self.command_args = config.commands.into_iter().map(|x|x.caller_arg.clone()).collect::<Vec<String>>();
         self.no_argument_callback = config.default_no_argument_callback;
+        self.flags = config.flags;
     }
 
     /// Executes the command itself
@@ -61,7 +68,12 @@ impl CommandHandler {
             if self.no_argument_callback.is_none() {
                 HelpCommand::new(self.commands.clone(), clone_meta_data_option(&self.meta_data)).execute();
             } else {
-                (self.no_argument_callback.unwrap())();
+                let parsed_flags = FlagParser::new(self.flags.clone()).parse_flags();
+                if parsed_flags.is_some() {
+                    (self.no_argument_callback.unwrap())(parsed_flags.unwrap());
+                } else {
+                    // TODO: Log flag error
+                }
             }
             return;
         }

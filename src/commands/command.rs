@@ -1,5 +1,7 @@
+use std::collections::HashMap;
+use crate::flags::flag::Flags;
 
-pub type Callback = fn();
+pub type Callback = fn(flags: Flags);
 
 /// Defines the base information of a command
 /// that needs to be delivered

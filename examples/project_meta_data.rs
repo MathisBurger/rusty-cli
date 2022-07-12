@@ -13,7 +13,8 @@ fn main() {
     runner.set_meta_data(meta_data);
     runner.enable_command_handler(CommandHandlerArguments {
         commands: vec![],
-        default_no_argument_callback: None
+        default_no_argument_callback: None,
+        flags: vec![]
     });
     runner.run();
 }

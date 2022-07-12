@@ -4,10 +4,11 @@ use std::env::Args;
 use std::rc::Rc;
 use rusty_cli::command_handler::CommandHandlerArguments;
 use rusty_cli::commands::command::Command;
+use rusty_cli::flags::flag::Flags;
 use rusty_cli::runner::Runner;
 
 // is executed on ping
-fn executor() {
+fn executor(flags: Flags) {
     println!("Pong");
 }
 
@@ -25,7 +26,8 @@ fn main() {
     let mut runner = Runner::new();
     runner.enable_command_handler(CommandHandlerArguments {
         commands: vec![pong_command],
-        default_no_argument_callback: None
+        default_no_argument_callback: None,
+        flags: vec![]
     });
      runner.run();
 }

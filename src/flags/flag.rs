@@ -1,3 +1,7 @@
+use std::collections::HashMap;
+
+/// Defines the base structure of flags in a command
+pub type Flags = HashMap<String, Option<String>>;
 
 #[derive(Clone)]
 pub struct Flag {
