@@ -6,6 +6,3 @@ mod option_resolver;
 pub mod flags;
 pub mod inputs;
 pub mod file_reader;
-
-// TODO: Implement UNIT-TESTS
-// TODO: Write documentation
