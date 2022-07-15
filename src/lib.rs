@@ -5,6 +5,7 @@ pub(crate) mod noop;
 pub mod meta_data;
 mod option_resolver;
 pub mod flags;
+pub mod inputs;
 
 // TODO: Implement wrapped inputs
 // TODO: Implement file reader
