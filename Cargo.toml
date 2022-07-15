@@ -2,8 +2,17 @@
 name = "rusty-cli"
 version = "0.1.0"
 edition = "2021"
+authors = ["Mathis Burger <kontakt«mathis-burger.de>"]
+license = "MIT"
+description = "A library for creating cli tools with rust"
+readme = "README.md"
+homepage = "https://github.com/you/grrs"
+repository = "https://github.com/you/grrs"
+keywords = ["cli"]
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 dialoguer = "0.10.1"
+platform-dirs = "0.3.0"
