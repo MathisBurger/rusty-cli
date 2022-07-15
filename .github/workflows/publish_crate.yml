@@ -1,0 +1,17 @@
+name: publish
+
+on:
+  pull_request:
+    types:
+      - closed
+  push:
+    branches:
+      - master
+
+jobs:
+  publish-to-crates:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish release
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
