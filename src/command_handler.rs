@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use crate::commands::command::{Callback, Command};
 use crate::commands::help_command::HelpCommand;
-use crate::flags::flag::{Flag, Flags};
+use crate::flags::flag::Flag;
 use crate::flags::flag_parser::FlagParser;
 use crate::meta_data::ApplicationMetaData;
 use crate::option_resolver::clone_meta_data_option;
