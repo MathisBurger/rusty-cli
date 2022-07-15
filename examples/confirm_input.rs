@@ -1,4 +1,4 @@
-use rusty_cli::inputs::ConfirmInput::ConfirmInput;
+use rusty_cli::inputs::confirm_input::ConfirmInput;
 
 fn main() {
 
