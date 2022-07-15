@@ -28,7 +28,7 @@ impl FileReader {
         let raw_file = File::open(&str_path);
         let mut file = match raw_file {
             Ok(f) => f,
-            Err(e) => {
+            Err(_e) => {
                 let mut f = OpenOptions::new()
                     .write(true)
                     .create(true)

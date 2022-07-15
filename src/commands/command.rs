@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use crate::flags::flag::Flags;
 
 pub type Callback = fn(flags: Flags);
