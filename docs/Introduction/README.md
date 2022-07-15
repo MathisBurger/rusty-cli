@@ -9,6 +9,6 @@ repository or read the documentation carefully.
 
 ## Documentation 
 
-1. <a href="CommandHandler.md">Command handler</a>
-2. <a href="FileReader.md">FileReader</a>
-3. <a href="Inputs.md">Inputs</a>
+1. <a href="../CommandHandler/README.md">Command handler</a>
+2. <a href="../FileReader/README.md">FileReader</a>
+3. <a href="../Inputs/README.md">Inputs</a>

@@ -48,10 +48,10 @@ let pong_command = Command::new(
 ```
 
 # Documentation 
-1. <a href="docs/Introduction.md">Introduction</a>
-2. <a href="docs/CommandHandler.md">Command handler</a>
-3. <a href="docs/FileReader.md">FileReader</a>
-4. <a href="docs/Inputs.md">Inputs</a>
+1. <a href="docs/Introduction/README.md">Introduction</a>
+2. <a href="docs/CommandHandler/README.md">Command handler</a>
+3. <a href="docs/FileReader/README.md">FileReader</a>
+4. <a href="docs/Inputs/README.md">Inputs</a>
 
 # Contribute 
 
